@@ -13,6 +13,7 @@ jobs:
           host: ${{ secrets.SSH_HOST_DIGITALOCEAN }}
           key: ${{ secrets.SSH_KEY_DIGITALOCEAN }}
           username: ${{ secrets.SSH_USERNAME_DIGITALOCEAN }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE_DIGITALOCEAN }}
           
           script: |
             mkdir LGL-casino
