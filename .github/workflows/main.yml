@@ -10,9 +10,9 @@ jobs:
       - name: "Deploy LGL-casino to DigitalOcean"
         uses: appleboy/ssh-action@v0.1.5
         with: 
-          host: ${{secrets.SSH_HOST_DIGITALOCEAN}}
-          key: ${{secrets.SSH_KEY_DIGITALOCEAN}}
-          username: ${{secrets.SSH_USERNAME_DIGITALOCEAN}}
+          host: ${{ secrets.SSH_HOST_DIGITALOCEAN }}
+          key: ${{ secrets.SSH_KEY_DIGITALOCEAN }}
+          username: ${{ secrets.SSH_USERNAME_DIGITALOCEAN }}
           
           script: |
             mkdir LGL-casino
