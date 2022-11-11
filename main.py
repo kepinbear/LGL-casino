@@ -16,7 +16,7 @@ daily_pick, num_votes = choose_top_pick(poll_results)
 # Creates tables if they don't exist and inserts ticker into tweets table
 create_base_table()
 tweet_row = [date.today(), daily_tweet, daily_pick, num_votes]
-insert_tweets_table(tweet_row)
+insert_tweet_table(tweet_row)
 
 #Wait until market is open
 market = trading_client.get_clock()

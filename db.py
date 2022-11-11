@@ -9,9 +9,9 @@ def create_base_table():
     cur.execute("CREATE TABLE IF NOT EXISTS tweet_log(date, tweet_id, ticker, votes)")
     cur.execute("CREATE TABLE IF NOT EXISTS trade_log(ticker, buy_ts, buy_order_id, buy_price, sell_ts, sell_order_id, sell_price)")
     
-def insert_tweets_table(data):
+def insert_tweet_table(data):
     """Insert tweet information into tweets_log."""
-    cur.execute("INSERT INTO tweets_log VALUES (?, ?, ?, ?)", data)
+    cur.execute("INSERT INTO tweet_log VALUES (?, ?, ?, ?)", data)
     con.commit()
 
 def insert_trade_table(data):
