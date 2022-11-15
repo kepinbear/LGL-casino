@@ -1,11 +1,15 @@
 from datetime import date
+from os import getcwd
 from db import *
 from twitter import *
 from trade import *
 from config import *
 
+csv = getcwd() + '\\' + 'sp500_companies.csv'
+db = getcwd() + '\\' + 'casino.sqlite'
+
 #Pick random stock at 6:00AM, send tweet, and stores it in tweet_data
-daily_tweet = send_tweet()
+daily_tweet = send_tweet(csv)
 #Wait 3 hours until end of poll.
 time.sleep(10800)
 
@@ -14,7 +18,6 @@ poll_results = retrieve_poll(daily_tweet)
 daily_pick, num_votes = choose_top_pick(poll_results)
 
 # Creates tables if they don't exist and inserts ticker into tweets table
-db = 'casino.sqlite'
 create_base_table(db)
 tweet_row = [date.today(), daily_tweet, daily_pick, num_votes]
 insert_tweet_table(db, tweet_row)

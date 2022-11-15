@@ -10,9 +10,9 @@ client = tweepy.Client(
     access_token_secret=TWT_ACCESS_TOKEN_SECRET
 )
 
-def pick_random_stocks():
+def pick_random_stocks(csv):
     """Pick 4 random stocks from spreadsheet as a list."""
-    csvfile = pd.read_csv("D:\Documents\projects\casino\sp500_companies.csv", header=0).sample(n=4)
+    csvfile = pd.read_csv(csv, header=0).sample(n=4)
     stocks = csvfile['Symbol'].values.tolist()
     return stocks
 
@@ -32,9 +32,9 @@ def pick_random_stocks():
 #         check = [check_if_tradable(item) for item in poll]
 #     return poll
 
-def send_tweet():
+def send_tweet(csv):
     """Send tweet using 4 random stocks and return id of that tweet."""
-    poll_choices = pick_random_stocks()
+    poll_choices = pick_random_stocks(csv)
     tweet = client.create_tweet(poll_options = poll_choices, poll_duration_minutes=180, text="Which one moons today? 🚀")
     tweet_id = tweet.data['id']
     return tweet_id
