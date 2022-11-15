@@ -30,7 +30,7 @@ time.sleep(open_time)
 buy_order_id = buy(daily_pick)
 time.sleep(5)
 buy_price = get_buy_filled_price(buy_order_id)
-buy_time = get_buy_filled_price(buy_order_id)
+buy_time = get_buy_timestamp(buy_order_id)
 
 #Fill in buy information for the trade_log table
 trade_row = [daily_pick, buy_time, buy_order_id, buy_price, 'NULL', 'NULL', 'NULL']
