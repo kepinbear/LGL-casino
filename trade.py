@@ -64,4 +64,4 @@ def get_time_to_next_close():
     return time_to_close
 
 def check_if_tradable(symbol):
-        return trading_client.get_asset(symbol).tradable
+    return trading_client.get_asset(symbol).tradable
