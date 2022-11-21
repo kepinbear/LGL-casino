@@ -1,4 +1,4 @@
-import pandas as pd
+from pandas import read_csv as pd
 import tweepy
 from config import *
 
@@ -32,10 +32,9 @@ def pick_random_stocks(csv):
 #         check = [check_if_tradable(item) for item in poll]
 #     return poll
 
-def send_tweet(csv):
+def send_start_tweet(choices):
     """Send tweet using 4 random stocks and return id of that tweet."""
-    poll_choices = pick_random_stocks(csv)
-    tweet = client.create_tweet(poll_options = poll_choices, poll_duration_minutes=180, text="Which one moons today? 🚀")
+    tweet = client.create_tweet(poll_options = choices, poll_duration_minutes=180, text="Which one moons today, #LGL? 🚀")
     tweet_id = tweet.data['id']
     return tweet_id
 
@@ -54,3 +53,9 @@ def choose_top_pick(poll_data):
             top_pick = poll_data[i]['label']
             top_votes = poll_data[i]['votes']
     return top_pick, top_votes
+
+def send_results_tweet(text):
+    """Sends the daily pnl of stocks at end of day."""
+    tweet = client.create_tweet(text=text)
+    tweet_id = tweet.data['id']
+    return tweet_id

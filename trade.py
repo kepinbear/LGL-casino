@@ -1,11 +1,15 @@
 from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
+from alpaca.data.historical.stock import StockHistoricalDataClient
+from alpaca.data.requests import StockBarsRequest
+from alpaca.data.timeframe import TimeFrame
 from config import *
-import time
+import datetime
 
 #Instantiates Alpaca client
 trading_client = TradingClient(ALP_API_KEY, ALP_SECRET_KEY, paper=True)
+historical_client = StockHistoricalDataClient(ALP_API_KEY, ALP_SECRET_KEY)
 
 def buy(top_pick):
     """Buy top pick at market open."""
@@ -64,4 +68,33 @@ def get_time_to_next_close():
     return time_to_close
 
 def check_if_tradable(symbol):
+    """Checks if an asset is tradable at Alpaca."""
     return trading_client.get_asset(symbol).tradable
+
+def retrieve_stock_performance(stocks):
+    """Retrieve performance of the list of stocks generated for the poll and returns a dictionary."""
+    start = datetime.datetime.strptime(str(datetime.date.today()), '%Y-%m-%d')
+    request_params = StockBarsRequest(
+                        symbol_or_symbols=stocks,
+                        timeframe=TimeFrame.Day,
+                        start=start,
+                        feed='iex'
+                        )
+    performance = historical_client.get_stock_bars(request_params)
+    #Calculates difference between open and close prices from stock bars; Stores in dictionary.
+    daily_pnl = {}
+    for stock in stocks:
+        pnl = round(performance[stock][0].open - performance[stock][0].close, 2)
+        daily_pnl[stock] = pnl
+    return daily_pnl
+
+def generate_performance_text(daily_pnl):
+    """Generates the text for the results tweet at end of market day."""
+    text = 'How did we do #LGL?' + '\n\n' + "Today's choices:" + '\n'
+    for stock in daily_pnl:
+        text += f"#{stock}: {daily_pnl[stock]}"
+        if daily_pnl[stock] > 0:
+            text += '\U0001f7e9' + '\n'
+        if daily_pnl[stock] < 0: 
+            text += '\U0001f7e5' + '\n'
+    return text
