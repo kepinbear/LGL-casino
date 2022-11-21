@@ -1,8 +1,8 @@
-"# LGL-casino" 
+# LGL-casino
 
 LGL-casino is a bot that makes trades based off of the results of a Twitter poll.
 
-"## Process Flow"
+## Process Flow
 1. Send a tweet with 4 random tickers at 6:00AM.
 2. Wait 3 hours and find the ticker with the highest number of votes.
 3. Record the tweet and winner into a table called tweet_log.
