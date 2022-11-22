@@ -6,6 +6,9 @@ from twitter import *
 from trade import *
 from config import *
 
+#Printing today's date for logging purposes.
+print(f'Starting run for {date.today()}.')
+
 csv = getcwd() + '\\' + 'sp500_companies.csv'
 db = getcwd() + '\\' + 'casino.sqlite'
 #Creates base tables
@@ -31,7 +34,8 @@ insert_tweet_table(db, tweet_row)
 
 #Wait until market is open
 open_time = get_time_to_next_open()
-time.sleep(open_time)
+print('Sleeping for {open_time}')
+time.sleep(open_time + 30)
 
 #Buy daily pick 
 buy_order_id = buy(daily_pick)
@@ -56,3 +60,6 @@ sell_time = get_sell_timestamp(sell_order_id)
 #Update row with sell information
 sell_row = [sell_time, sell_order_id, sell_price, buy_order_id]
 update_trade_table(db, sell_row)
+
+#Printing for logging purposes.
+print(f'Ending run for {date.today()}.')
