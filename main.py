@@ -34,7 +34,7 @@ insert_tweet_table(db, tweet_row)
 
 #Wait until market is open
 open_time = get_time_to_next_open()
-print('Sleeping for {open_time}')
+print(f'Sleeping for {open_time}')
 time.sleep(open_time + 30)
 
 #Buy daily pick 

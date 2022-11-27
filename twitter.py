@@ -1,4 +1,4 @@
-from pandas import read_csv as pd
+import pandas as pd
 import tweepy
 from config import *
 
